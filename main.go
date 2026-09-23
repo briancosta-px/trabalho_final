@@ -1,6 +1,7 @@
 package main
 
 import (
+	"api-gin/handlers"
 	"net/http"
 	"time"
 
@@ -26,10 +27,24 @@ func main() {
 			})
 		})
 
+		//Alunos
+		v1.POST("/alunos", handlers.CriarAluno)
+		v1.GET("/alunos", handlers.ListarAlunos)
+		v1.GET("/alunos/:matricula", handlers.BuscarAluno)
+
+		//Salas
+		v1.POST("/salas", handlers.CriarSala)
+		v1.GET("/salas", handlers.ListarSalas)
+		v1.GET("/salas/:id", handlers.BuscarSala)
+		v1.PUT("/salas/:id", handlers.AtualizarSala)
+
 		// Domínio de Turmas (Classes)
-		//v1.POST("/turmas", turmaHandler.CriarTurma)
-		//v1.GET("/turmas", turmaHandler.ListarTurmas)
-		//v1.POST("/turmas/:id/alocar", turmaHandler.AlocarSala)
+		v1.POST("/turmas", handlers.CriarTurma)
+		v1.GET("/turmas", handlers.ListarTurmas)
+		v1.GET("/turmas/:id", handlers.BuscarTurma)
+		v1.POST("/turmas/:id/alunos", handlers.AdicionarAluno)
+		v1.GET("/turmas/:id/alunos", handlers.ListarAlunosDaTurma)
+		v1.POST("/turmas/:id/alocar", handlers.AlocarSala)
 	}
 
 	r.Run(":8080")
